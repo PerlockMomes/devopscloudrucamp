@@ -1,0 +1,15 @@
+---
+- name: user creation and authorisation rules
+  hosts: all
+  
+  tasks:
+   - name: user creation
+     ansible.builtin.user:
+     name: cloudru
+     password: {{ 'cloudpass' | password_hash('sha512') }}
+   
+   - name: ssh authorization
+     ansible.posix.authorized_key:
+       user: cloudru
+       state: present
+       key: 
